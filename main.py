@@ -27,12 +27,13 @@ def get_type(v):
 
 def build_schema(root):
     schema = dict()
-    for k in root:
-        v = root[k]
+    
+    for k,v in root.items():
         t = get_type(v)
 
         if t["type"] == "object":
-            schema[k] = build_schema(v)
+            t['properties'] = build_schema(v)
+            schema[k] = t
         else:
             schema[k] = t
     return schema
